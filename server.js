@@ -1,7 +1,11 @@
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
+
+const port = process.env.PORT || 3000;
+
 var app = express();
+
 hbs.registerPartials(__dirname+'/views/partials');//放設置各個hbs中的共同部分的地方
 app.set('view engine','hbs');//設置一些各種express-related的結構
 app.use((req,res,next) => {
@@ -16,9 +20,9 @@ app.use((req,res,next) => {
 });
   next();
 });
-app.use((req,res,next) => {
-  res.render('maintenance.hbs');
-});
+/*app.use((req,res,next) => {
+/  res.render('maintenance.hbs');
+});*/
 app.use(express.static(__dirname+'/public'));//作用是添加一些中間件,express.static()接受你想要展現文件的絕對路勁
 
 hbs.registerHelper('getCurrentYear',() => {
@@ -55,6 +59,6 @@ app.get('/bad',(req,res) => {
      errorMessage: 'Unable to handle request'
   });  
 });
-app.listen(3000,() =>{
-  console.log('Server is up on port 3000')
+app.listen(port,() =>{
+  console.log('Server is up on port '+port);
 });
